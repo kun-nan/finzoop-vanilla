@@ -31,11 +31,11 @@
   </script>
 
   <script>
-    window.CMS_URL = 'http://localhost:1337';
-    window.CMS_TOKEN = ''; // set via environment or build step
+    window.CONTENTFUL_SPACE_ID       = 'tabc1qgaltm6';
+    window.CONTENTFUL_ACCESS_TOKEN   = 'VCpSt0x-mm6pOncY1cYlkkuU5b9UsD_cs_mINwRgs6I';
+    window.CONTENTFUL_PREVIEW_TOKEN  = 'Y3V82ept2t018xmuDJfyAf2Da86iZSsntizHFKwHmhk';
   </script>
   <script src="/cms.js" defer></script>
-  <script src="/publish-control.js" defer></script>
   <script src="/cms-preview.js" defer></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
@@ -257,6 +257,30 @@
   </footer>
 
   <script src="main.js"></script>
-  <script>lucide.createIcons();</script>
+  <script>
+    lucide.createIcons();
+    
+    // Final dynamic injection logic
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Hero Dynamic Injection
+      if (window.fetchHeroBanner) {
+        const hero = await window.fetchHeroBanner('homepage-hero');
+        if (hero) {
+          const heroSection = document.querySelector('[data-cms-id="homepage-hero"]');
+          if (heroSection) {
+            if (hero.headline) heroSection.querySelector('h1').innerText = hero.headline;
+            if (hero.subtext) heroSection.querySelector('p').innerText = hero.subtext;
+            if (hero.ctaText && hero.ctaUrl) {
+              const cta = heroSection.querySelector('.hero-ctas .btn:first-child');
+              if (cta) {
+                cta.innerText = hero.ctaText;
+                cta.setAttribute('href', hero.ctaUrl);
+              }
+            }
+          }
+        }
+      }
+    });
+  </script>
 </body>
 </html>

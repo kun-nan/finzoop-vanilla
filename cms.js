@@ -1,153 +1,271 @@
-const CMS_URL = window.CMS_URL || 'http://localhost:1337';
-const API_TOKEN = window.CMS_TOKEN || '';
+/**
+ * Finzoop CMS Client — Contentful Delivery API
+ * -----------------------------------------------
+ * Queries the Contentful Content Delivery API (read-only, CDN-backed).
+ * All content is published before appearing here — no custom filtering needed.
+ *
+ * Config (set per-page in <head> before this script loads):
+ *   window.CONTENTFUL_SPACE_ID    — Your Contentful Space ID
+ *   window.CONTENTFUL_ACCESS_TOKEN — Content Delivery API access token (read-only)
+ */
 
-const getHeaders = () => {
-  return API_TOKEN ? { 'Authorization': `Bearer ${API_TOKEN}` } : {};
-};
+const SPACE_ID      = window.CONTENTFUL_SPACE_ID      || 'tabc1qgaltm6';
+const CDN_TOKEN     = window.CONTENTFUL_ACCESS_TOKEN   || 'VCpSt0x-mm6pOncY1cYlkkuU5b9UsD_cs_mINwRgs6I';
+const PREVIEW_TOKEN = window.CONTENTFUL_PREVIEW_TOKEN  || 'Y3V82ept2t018xmuDJfyAf2Da86iZSsntizHFKwHmhk';
 
-const cacheResponse = (key, data) => {
-  sessionStorage.setItem(key, JSON.stringify({
-    timestamp: Date.now(),
-    data
-  }));
-};
+// Auto-detect preview mode from URL (?preview=true)
+const IS_PREVIEW = new URLSearchParams(window.location.search).get('preview') === 'true';
+const ACTIVE_TOKEN = IS_PREVIEW ? PREVIEW_TOKEN : CDN_TOKEN;
+const CDN_BASE = IS_PREVIEW
+  ? `https://preview.contentful.com/spaces/${SPACE_ID}/environments/master`
+  : `https://cdn.contentful.com/spaces/${SPACE_ID}/environments/master`;
 
-const getCachedResponse = (key) => {
-  const cached = sessionStorage.getItem(key);
-  if (cached) {
-    const { timestamp, data } = JSON.parse(cached);
-    if (Date.now() - timestamp < 5 * 60 * 1000) {
-      return data;
-    }
-  }
-  return null;
-};
+// ─── Cache (5-minute session storage) ────────────────────────────────────────
 
-async function fetchCMS(endpoint, cacheKey = null) {
-  if (cacheKey) {
-    const cached = getCachedResponse(cacheKey);
-    if (cached) return cached;
-  }
+function _cacheSet(key, data) {
   try {
-    const res = await fetch(`${CMS_URL}/api/${endpoint}`, { headers: getHeaders() });
-    if (!res.ok) throw new Error(`CMS API error: ${res.status}`);
-    const data = await res.json();
-    if (cacheKey) cacheResponse(cacheKey, data);
-    return data;
-  } catch (error) {
-    console.warn('Falling back to static content:', error);
+    sessionStorage.setItem('ctfl_' + key, JSON.stringify({ ts: Date.now(), data }));
+  } catch (_) {}
+}
+
+function _cacheGet(key) {
+  try {
+    const raw = sessionStorage.getItem('ctfl_' + key);
+    if (!raw) return null;
+    const { ts, data } = JSON.parse(raw);
+    if (Date.now() - ts < 5 * 60 * 1000) return data;
+  } catch (_) {}
+  return null;
+}
+
+// ─── Core Fetch ──────────────────────────────────────────────────────────────
+
+async function _fetchContentful(endpoint, params = {}, cacheKey = null) {
+  if (cacheKey) {
+    const hit = _cacheGet(cacheKey);
+    if (hit) return hit;
+  }
+
+  const url = new URL(`${CDN_BASE}/${endpoint}`);
+  url.searchParams.set('access_token', ACTIVE_TOKEN);
+  Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+
+  try {
+    const res = await fetch(url.toString());
+    if (!res.ok) throw new Error(`Contentful ${res.status}: ${res.statusText}`);
+    const json = await res.json();
+    if (cacheKey) _cacheSet(cacheKey, json);
+    return json;
+  } catch (err) {
+    console.warn('[CMS] Contentful fetch failed, using static fallback.', err.message);
     return null;
   }
 }
 
+// Helper: resolve linked assets/entries from an API response includes block
+function _resolveAssetUrl(assetId, includes) {
+  if (!includes?.Asset) return null;
+  const asset = includes.Asset.find(a => a.sys.id === assetId);
+  return asset?.fields?.file?.url ? 'https:' + asset.fields.file.url : null;
+}
+
+// ─── Content Helpers ─────────────────────────────────────────────────────────
+
+/** Global site settings (colours, footer text, logo) */
 async function fetchGlobalSettings() {
-  const data = await fetchCMS('global-setting?populate=*', 'cms-global-settings');
-  if (data?.data?.attributes) {
-    const attrs = data.data.attributes;
-    document.documentElement.style.setProperty('--primary', attrs.primaryColor || '#1B4FD8');
-    document.documentElement.style.setProperty('--secondary', attrs.secondaryColor || '#00C896');
-    document.documentElement.style.setProperty('--accent', attrs.accentColor || '#FF6B35');
-    
+  const data = await _fetchContentful('entries', {
+    content_type: 'globalSetting',
+    limit: 1,
+  }, 'global-settings');
+
+  const fields = data?.items?.[0]?.fields;
+  if (!fields) return;
+
+  if (fields.primaryColor)
+    document.documentElement.style.setProperty('--primary', fields.primaryColor);
+  if (fields.secondaryColor)
+    document.documentElement.style.setProperty('--secondary', fields.secondaryColor);
+  if (fields.accentColor)
+    document.documentElement.style.setProperty('--accent', fields.accentColor);
+  if (fields.footerDisclaimer) {
     document.querySelectorAll('.footer-disclaimer').forEach(el => {
-      if (attrs.footerDisclaimer) el.innerHTML = attrs.footerDisclaimer;
+      el.innerHTML = fields.footerDisclaimer;
     });
-    // Add logic to update logos etc.
   }
 }
 
-async function fetchNavigation() {
-  const data = await fetchCMS('navigation?populate=*', 'cms-navigation');
-  if (data?.data?.attributes) {
-    // Render logic for nav
-  }
+/** Per-page SEO metadata */
+async function fetchPageSeo(slug) {
+  const data = await _fetchContentful('entries', {
+    content_type: 'pageSeo',
+    'fields.slug': slug,
+    limit: 1,
+  }, `page-seo-${slug}`);
+
+  return data?.items?.[0]?.fields || null;
 }
 
+/** Hero banner for a given identifier string */
 async function fetchHeroBanner(identifier) {
-  const data = await fetchCMS(`hero-banners?filters[identifier][$eq]=${identifier}&populate=*`, `cms-hero-${identifier}`);
-  return data?.data?.[0]?.attributes || null;
+  const data = await _fetchContentful('entries', {
+    content_type: 'heroBanner',
+    'fields.identifier': identifier,
+    limit: 1,
+  }, `hero-${identifier}`);
+
+  return data?.items?.[0]?.fields || null;
 }
 
+/** Product page content by slug */
 async function fetchProductPage(slug) {
-  const data = await fetchCMS(`product-pages?filters[slug][$eq]=${slug}&populate=*`);
-  return data?.data?.[0]?.attributes || null;
+  const data = await _fetchContentful('entries', {
+    content_type: 'productPage',
+    'fields.slug': slug,
+    limit: 1,
+  }, `product-${slug}`);
+
+  return data?.items?.[0]?.fields || null;
 }
 
+/** Calculator meta (title, description, FAQs) by slug */
 async function fetchCalculatorMeta(slug) {
-  const data = await fetchCMS(`calculator-metas?filters[slug][$eq]=${slug}&populate=*`);
-  return data?.data?.[0]?.attributes || null;
+  const data = await _fetchContentful('entries', {
+    content_type: 'calculatorMeta',
+    'fields.slug': slug,
+    limit: 1,
+    include: 2,
+  }, `calc-${slug}`);
+
+  return data?.items?.[0]?.fields || null;
 }
 
+/** Published blog posts — newest first */
 async function fetchBlogPosts(options = {}) {
-  let query = 'blog-posts?populate=*&filters[isPublished][$eq]=true';
-  const data = await fetchCMS(query);
-  return data?.data || [];
+  const params = {
+    content_type: 'blogPost',
+    order: '-fields.publishedAt',
+    limit: options.limit || 10,
+    include: 1, // Get linked assets (coverImage)
+  };
+  if (options.category) params['fields.category'] = options.category;
+
+  const data = await _fetchContentful('entries', params, `blog-posts-${options.category || 'all'}`);
+  return {
+    items: data?.items || [],
+    includes: data?.includes || {}
+  };
 }
 
+/** Testimonials */
 async function fetchTestimonials() {
-  const data = await fetchCMS('testimonials?filters[isPublished][$eq]=true&populate=*');
-  return data?.data || [];
+  const data = await _fetchContentful('entries', {
+    content_type: 'testimonial',
+    limit: 20,
+  }, 'testimonials');
+
+  return data?.items?.map(i => i.fields) || [];
 }
 
+/** Partner logos */
 async function fetchPartners() {
-  const data = await fetchCMS('partners?filters[isPublished][$eq]=true&populate=*');
-  return data?.data || [];
+  const data = await _fetchContentful('entries', {
+    content_type: 'partner',
+    limit: 20,
+    include: 1,
+  }, 'partners');
+
+  const includes = data?.includes;
+  return (data?.items || []).map(item => ({
+    ...item.fields,
+    logoUrl: item.fields.logo?.sys?.id
+      ? _resolveAssetUrl(item.fields.logo.sys.id, includes)
+      : null,
+  }));
 }
 
+/** FAQs by category */
 async function fetchFaqs(category) {
-  const data = await fetchCMS(`faqs?filters[category][$eq]=${category}&filters[isPublished][$eq]=true`);
-  return data?.data || [];
+  const params = { content_type: 'faq', limit: 50 };
+  if (category) params['fields.category'] = category;
+
+  const data = await _fetchContentful('entries', params, `faqs-${category || 'all'}`);
+  return data?.items?.map(i => i.fields) || [];
 }
 
-function injectSEO(pageSeoData) {
-  if (!pageSeoData) return;
-  if (pageSeoData.metaTitle) document.title = pageSeoData.metaTitle;
-  
-  const setMeta = (name, content) => {
+// ─── SEO Injection ────────────────────────────────────────────────────────────
+
+function injectSEO(seo) {
+  if (!seo) return;
+
+  if (seo.metaTitle) document.title = seo.metaTitle;
+
+  const setMeta = (nameOrProp, content) => {
     if (!content) return;
-    let el = document.querySelector(`meta[name="${name}"]`) || document.querySelector(`meta[property="${name}"]`);
+    const isProp = nameOrProp.startsWith('og:');
+    const attr   = isProp ? 'property' : 'name';
+    let el = document.querySelector(`meta[${attr}="${nameOrProp}"]`);
     if (!el) {
       el = document.createElement('meta');
-      name.startsWith('og:') ? el.setAttribute('property', name) : el.setAttribute('name', name);
+      el.setAttribute(attr, nameOrProp);
       document.head.appendChild(el);
     }
     el.setAttribute('content', content);
   };
-  
-  setMeta('description', pageSeoData.metaDescription);
-  setMeta('keywords', pageSeoData.metaKeywords);
-  setMeta('og:title', pageSeoData.ogTitle);
-  setMeta('og:description', pageSeoData.ogDescription);
-  
-  if (pageSeoData.canonicalUrl) {
+
+  setMeta('description',    seo.metaDescription);
+  setMeta('keywords',       seo.metaKeywords);
+  setMeta('og:title',       seo.ogTitle || seo.metaTitle);
+  setMeta('og:description', seo.ogDescription || seo.metaDescription);
+
+  if (seo.canonicalUrl) {
     let link = document.querySelector('link[rel="canonical"]');
     if (!link) {
       link = document.createElement('link');
       link.setAttribute('rel', 'canonical');
       document.head.appendChild(link);
     }
-    link.setAttribute('href', pageSeoData.canonicalUrl);
+    link.setAttribute('href', seo.canonicalUrl);
   }
 }
+
+// ─── Lucide Icons ─────────────────────────────────────────────────────────────
 
 function renderLucideIcons() {
-  if (window.lucide) {
-    lucide.createIcons();
-  }
+  if (window.lucide) lucide.createIcons();
 }
 
+// ─── Auto-init on page load ───────────────────────────────────────────────────
+
 document.addEventListener('DOMContentLoaded', async () => {
+  // Auto-inject SEO if page declares a slug via data-cms-slug attribute
+  const seoEl = document.querySelector('[data-cms="page-seo"][data-cms-slug]');
+  if (seoEl) {
+    const slug = seoEl.getAttribute('data-cms-slug');
+    const seo  = await fetchPageSeo(slug);
+    if (seo) injectSEO(seo);
+  }
+
+  // Auto-inject calculator meta if page declares it
+  const calcEl = document.querySelector('[data-cms="calculator-meta"][data-cms-slug]');
+  if (calcEl) {
+    const slug = calcEl.getAttribute('data-cms-slug');
+    await fetchCalculatorMeta(slug); // result available for page-level scripts via window.cmsCalcMeta
+  }
+
   await fetchGlobalSettings();
   renderLucideIcons();
 });
 
-window.fetchGlobalSettings = fetchGlobalSettings;
-window.fetchNavigation = fetchNavigation;
-window.fetchHeroBanner = fetchHeroBanner;
-window.fetchProductPage = fetchProductPage;
-window.fetchCalculatorMeta = fetchCalculatorMeta;
-window.fetchBlogPosts = fetchBlogPosts;
-window.fetchTestimonials = fetchTestimonials;
-window.fetchPartners = fetchPartners;
-window.fetchFaqs = fetchFaqs;
-window.injectSEO = injectSEO;
-window.renderLucideIcons = renderLucideIcons;
+// ─── Exports ──────────────────────────────────────────────────────────────────
+
+window.fetchGlobalSettings  = fetchGlobalSettings;
+window.fetchPageSeo         = fetchPageSeo;
+window.fetchHeroBanner      = fetchHeroBanner;
+window.fetchProductPage     = fetchProductPage;
+window.fetchCalculatorMeta  = fetchCalculatorMeta;
+window.fetchBlogPosts       = fetchBlogPosts;
+window.fetchTestimonials    = fetchTestimonials;
+window.fetchPartners        = fetchPartners;
+window.fetchFaqs            = fetchFaqs;
+window.injectSEO            = injectSEO;
+window.renderLucideIcons    = renderLucideIcons;

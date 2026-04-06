@@ -1,8 +1,9 @@
-async function renderBlogListing(options = {}) {
+async function renderWordPressBlogListing(options = {}) {
   const container = document.querySelector('[data-cms="blog-list"]');
   if (!container) return;
 
-  container.innerHTML = '<div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>';
+  // Clear skeletons
+  container.innerHTML = '';
 
   try {
     const res = await fetch('https://blog.finzoop.com/wp-json/wp/v2/posts?_embed&per_page=9');
@@ -11,7 +12,7 @@ async function renderBlogListing(options = {}) {
     const posts = window.filterPublished ? window.filterPublished(rawPosts) : rawPosts;
     
     if (posts.length === 0) {
-      container.innerHTML = '<p>No posts available.</p>';
+      container.innerHTML = '<p>No posts available from WordPress.</p>';
       return;
     }
 
@@ -22,17 +23,19 @@ async function renderBlogListing(options = {}) {
       const readTime = Math.max(1, Math.ceil((post.content?.rendered?.length || 0) / 1000));
       
       html += `
-        <div class="card blog-card" style="padding: 0;">
-          ${coverUrl ? `<img src="${coverUrl}" alt="" style="width:100%; height:200px; object-fit:cover; border-radius: 8px 8px 0 0;" />` : ''}
+        <div class="card blog-card" style="padding: 0; overflow: hidden;">
+          ${coverUrl ? `<img src="${coverUrl}" alt="" style="width:100%; height:200px; object-fit:cover;" />` : ''}
           <div style="padding: 24px;">
-            <div style="font-size: 14px; color: var(--primary); margin-bottom: 8px;">
+            <div style="font-size: 14px; color: var(--primary); margin-bottom: 8px; font-weight: 600;">
               <i data-lucide="tag" class="icon-sm"></i> ${categoryName}
             </div>
-            <h3 style="margin-bottom: 12px;"><a href="${post.link}" target="_blank">${post.title.rendered}</a></h3>
-            <p style="color: #64748b; font-size: 14px;">${post.excerpt.rendered.replace(/(<([^>]+)>)/gi, "").substring(0, 100)}...</p>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; font-size:12px; color:#94a3b8;">
+            <h3 style="margin-bottom: 12px; line-height: 1.4;"><a href="${post.link}" target="_blank">${post.title.rendered}</a></h3>
+            <p style="color: var(--text-secondary); font-size: 14px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+              ${post.excerpt.rendered.replace(/(<([^>]+)>)/gi, "").substring(0, 100)}...
+            </p>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:24px; font-size:12px; color:var(--text-secondary); border-top:1px solid var(--border); padding-top:16px;">
               <span><i data-lucide="clock" class="icon-sm"></i> ${readTime} min read</span>
-              <span><i data-lucide="eye" class="icon-sm"></i> -</span>
+              <a href="${post.link}" target="_blank" style="font-weight: 600; display:flex; align-items:center; gap:4px;">Read on Blog <i data-lucide="external-link" class="icon-sm"></i></a>
             </div>
           </div>
         </div>
@@ -42,11 +45,10 @@ async function renderBlogListing(options = {}) {
     container.innerHTML = `<div class="grid-3">${html}</div>`;
     if (window.renderLucideIcons) window.renderLucideIcons();
   } catch (err) {
-    console.error('Failed to render WordPress blog listing', err);
-    container.innerHTML = '<p>Unable to load posts.</p>';
+    console.warn('[CMS] WordPress fallback failed:', err);
+    container.innerHTML = '<p style="text-align:center; padding:40px;">No blog content available at the moment.</p>';
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  renderBlogListing();
-});
+// Export for blog.js fallback
+window.renderWordPressBlogListing = renderWordPressBlogListing;

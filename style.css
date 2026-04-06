@@ -218,8 +218,9 @@ a:hover { color: var(--dark); }
 }
 
 .card:hover {
-  transform: scale(1.02);
+  transform: translateY(-8px);
   box-shadow: var(--shadow-hover);
+  border-color: var(--primary);
 }
 
 /* Gradients & Backgrounds */
@@ -621,10 +622,10 @@ input[type=range]::-webkit-slider-runnable-track {
 
 /* ====== CMS & SKELETON CSS ====== */
 .skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
   background-size: 200% 100%;
-  animation: skeleton-loading 1.5s infinite;
-  border-radius: 8px;
+  animation: skeleton-loading 2s infinite ease-in-out;
+  border-radius: 12px;
 }
 @keyframes skeleton-loading {
   0% { background-position: 200% 0; }
@@ -661,5 +662,10 @@ input[type=range]::-webkit-slider-runnable-track {
 
 /* Footer Social Icons */
 .footer-bottom .icon-md { color: #94A3B8; }
-.footer-bottom .icon-md:hover { color: white; transition: 0.2s ease; }
+.footer-bottom .icon-md:hover,
+.social-links a:hover .icon-md { 
+  color: white; 
+  transform: scale(1.2) rotate(8deg); 
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
 

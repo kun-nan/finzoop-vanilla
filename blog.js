@@ -5,29 +5,38 @@ async function renderBlogListing(options = {}) {
   container.innerHTML = '<div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>';
 
   try {
-    const posts = await window.fetchBlogPosts(options);
-    const publishedPosts = window.filterPublished(posts);
+    const { items: posts, includes } = await window.fetchBlogPosts(options);
     
-    if (publishedPosts.length === 0) {
-      container.innerHTML = '<p>No posts available.</p>';
+    if (!posts || posts.length === 0) {
+      if (window.renderWordPressBlogListing) {
+        console.log('[CMS] Contentful empty, falling back to WordPress...');
+        return window.renderWordPressBlogListing(options);
+      }
+      container.innerHTML = '<p style="text-align:center; grid-column:span 3; padding:40px;">No blog posts available yet. Connect to Contentful to see your stories here!</p>';
       return;
     }
 
     let html = '';
-    publishedPosts.forEach(post => {
-      const attrs = post.attributes;
+    posts.forEach(post => {
+      const fields = post.fields;
+      const coverUrl = fields.coverImage?.sys?.id 
+        ? window._resolveAssetUrl(fields.coverImage.sys.id, includes) 
+        : null;
+
       html += `
-        <div class="card blog-card" style="padding: 0;">
-          ${attrs.coverImage?.data ? `<img src="${window.CMS_URL}${attrs.coverImage.data.attributes.url}" alt="${attrs.coverImageAlt}" style="width:100%; height:200px; object-fit:cover; border-radius: 8px 8px 0 0;" />` : ''}
+        <div class="card blog-card" style="padding: 0; overflow: hidden;">
+          ${coverUrl ? `<img src="${coverUrl}" alt="${fields.title}" style="width:100%; height:200px; object-fit:cover;" />` : ''}
           <div style="padding: 24px;">
-            <div style="font-size: 14px; color: ${attrs.category?.data?.attributes?.color || '--primary'}; margin-bottom: 8px;">
-              <i data-lucide="${attrs.category?.data?.attributes?.icon || 'tag'}" class="icon-sm"></i> ${attrs.category?.data?.attributes?.name || 'Blog'}
+            <div style="font-size: 14px; color: var(--primary); margin-bottom: 8px; font-weight: 600;">
+              <i data-lucide="tag" class="icon-sm"></i> ${fields.category || 'Financial Insight'}
             </div>
-            <h3 style="margin-bottom: 12px;"><a href="blog-post.html?slug=${attrs.slug}">${attrs.title}</a></h3>
-            <p style="color: #64748b; font-size: 14px;">${attrs.excerpt || ''}</p>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; font-size:12px; color:#94a3b8;">
-              <span><i data-lucide="clock" class="icon-sm"></i> ${attrs.readTimeMinutes || 5} min read</span>
-              <span><i data-lucide="eye" class="icon-sm"></i> ${attrs.viewCount || 0}</span>
+            <h3 style="margin-bottom: 12px; line-height: 1.4;"><a href="blog-post.html?slug=${fields.slug}">${fields.title}</a></h3>
+            <p style="color: var(--text-secondary); font-size: 14px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+              ${fields.summary || fields.excerpt || ''}
+            </p>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:24px; font-size:12px; color:var(--text-secondary); border-top:1px solid var(--border); padding-top:16px;">
+              <span><i data-lucide="calendar" class="icon-sm"></i> ${new Date(fields.publishedAt || Date.now()).toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'})}</span>
+              <a href="blog-post.html?slug=${fields.slug}" style="font-weight: 600; display:flex; align-items:center; gap:4px;">Read More <i data-lucide="arrow-right" class="icon-sm"></i></a>
             </div>
           </div>
         </div>
@@ -37,8 +46,8 @@ async function renderBlogListing(options = {}) {
     container.innerHTML = `<div class="grid-3">${html}</div>`;
     if (window.renderLucideIcons) window.renderLucideIcons();
   } catch (err) {
-    console.error('Failed to render blog listing', err);
-    container.innerHTML = '<p>Unable to load posts.</p>';
+    console.error('[CMS] Failed to render blog listing:', err);
+    container.innerHTML = '<div class="card" style="grid-column: span 3; text-align: center; color: var(--accent);">Failed to load posts. Check console for details.</div>';
   }
 }
 
@@ -47,8 +56,16 @@ async function renderBlogPost(slug) {
   const container = document.querySelector('[data-cms="blog-post"]');
   if (!container) return;
   
-  // Implementation for single post...
-  container.innerHTML = '<h2>Loading post...</h2>';
+  container.innerHTML = '<div class="skeleton-heading"></div><div class="skeleton-text"></div><div class="skeleton-text"></div>';
+  
+  try {
+    // Note: Detail pages can use the same delivery API with filters
+    const data = await window.fetchBlogPosts({ limit: 1 }); // Simplification for demo
+    // Real implementation would use fetchPageBySlug()
+    container.innerHTML = `<h2>Viewing ${slug}</h2><p>Individual blog post rendering logic will be finalized based on rich text styling.</p>`;
+  } catch (err) {
+    container.innerHTML = '<p>Post not found.</p>';
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

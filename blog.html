@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog & Financial Resources | Finzoop</title>
   <link rel="stylesheet" href="style.css">
+  <script>
+    window.CONTENTFUL_SPACE_ID       = 'tabc1qgaltm6';
+    window.CONTENTFUL_ACCESS_TOKEN   = 'VCpSt0x-mm6pOncY1cYlkkuU5b9UsD_cs_mINwRgs6I';
+    window.CONTENTFUL_PREVIEW_TOKEN  = 'Y3V82ept2t018xmuDJfyAf2Da86iZSsntizHFKwHmhk';
+  </script>
+  <script src="/cms.js" defer></script>
+  <script src="/blog.js" defer></script>
+  <script src="/cms-preview.js" defer></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="/wordpress-blog.js" defer></script>
 </head>
 <body>
   <header class="header">
@@ -25,23 +35,18 @@
       </nav>
     </div>
   </header>
-  <div class="container" style="padding-top: 120px;">
-    <h1 style="text-align:center;">Finzoop Insights</h1>
-    <div class="grid-3" style="margin-top:40px;">
-      <div class="card">
-        <div style="font-size: 12px; font-weight:700; color:var(--primary); margin-bottom: 8px;">TAX PLANNING</div>
-        <h3>Old vs New Tax Regime 2025-26</h3>
-        <p>An in-depth look at the new tax slabs and whether you should switch based on your deductions.</p>
-        <a href="#" style="font-weight: 600;">Read More →</a>
-      </div>
-      <div class="card">
-        <div style="font-size: 12px; font-weight:700; color:var(--primary); margin-bottom: 8px;">INVESTING</div>
-        <h3>Why Small Cap Funds Are Risky Yet Rewarding</h3>
-        <p>Understanding the volatility in small cap mutual funds and how to balance your portfolio.</p>
-        <a href="#" style="font-weight: 600;">Read More →</a>
-      </div>
+  <div class="container" style="padding-top: 120px;" data-cms="page-seo" data-cms-slug="blog-page">
+    <h1 style="text-align:center; margin-bottom: 40px;">Finzoop Insights</h1>
+    
+    <!-- Dynamic Content Loading Area -->
+    <div data-cms="blog-list">
+      <!-- Content will be injected here by blog.js/wordpress-blog.js -->
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
     </div>
   </div>
   <script src="main.js"></script>
+  <script>if(window.lucide){lucide.createIcons();}</script>
 </body>
 </html>

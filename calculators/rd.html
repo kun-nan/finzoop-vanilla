@@ -6,38 +6,47 @@
   <title>RD Calculator - Recurring Deposit Calculator Online | Finzoop</title>
   <link rel="stylesheet" href="../style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    window.CONTENTFUL_SPACE_ID       = 'tabc1qgaltm6';
+    window.CONTENTFUL_ACCESS_TOKEN   = 'VCpSt0x-mm6pOncY1cYlkkuU5b9UsD_cs_mINwRgs6I';
+    window.CONTENTFUL_PREVIEW_TOKEN  = 'Y3V82ept2t018xmuDJfyAf2Da86iZSsntizHFKwHmhk';
+  </script>
+  <script src="/cms.js" defer></script>
+  <script src="/cms-preview.js" defer></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body>
   <header class="header"><div class="container nav-container"><a href="../index.html" class="logo">Fin<span>zoop</span></a></div></header>
-  <div class="container" style="padding-top: 120px;">
+  <div class="container" style="padding-top: 120px;" data-cms="calculator-meta" data-cms-slug="rd-calculator">
     <h1 style="text-align: center; margin-bottom: 40px;">Recurring Deposit (RD) Calculator</h1>
     <div class="calc-container">
       <div class="card">
         <div class="input-group">
           <div class="input-header"><label class="input-label">Monthly Investment</label>
-          <div class="number-input-wrap"><span>₹</span><input type="text" class="sync-input" data-sync="rd-amt" value="5000"></div></div>
+          <div class="number-input-wrap"><span>&#8377;</span><input type="text" class="sync-input" data-sync="rd-amt" value="5000"></div></div>
           <div class="range-slider"><input type="range" class="sync-range" data-sync="rd-amt" min="500" max="100000" step="500" value="5000"></div>
         </div>
         <div class="input-group">
           <div class="input-header"><label class="input-label">Interest Rate (% p.a)</label>
-          <div class="number-input-wrap"><input type="text" class="sync-input" data-sync="rd-rate" value="7.5" style="padding-left:12px;"><span style="left:auto;right:12px;">%</span></div></div>
+          <div class="number-input-wrap"><input type="text" class="sync-input" data-sync="rd-rate" value="7.5" style="padding-left:12px; padding-right:28px;"><span style="left:auto;right:12px;">%</span></div></div>
           <div class="range-slider"><input type="range" class="sync-range" data-sync="rd-rate" min="3" max="12" step="0.1" value="7.5"></div>
         </div>
         <div class="input-group">
           <div class="input-header"><label class="input-label">Time Period (Years)</label>
-          <div class="number-input-wrap"><input type="text" class="sync-input" data-sync="rd-years" value="5" style="padding-left:12px;"><span style="left:auto;right:12px;">Yr</span></div></div>
+          <div class="number-input-wrap"><input type="text" class="sync-input" data-sync="rd-years" value="5" style="padding-left:12px; padding-right:32px;"><span style="left:auto;right:12px;">Yr</span></div></div>
           <div class="range-slider"><input type="range" class="sync-range" data-sync="rd-years" min="1" max="10" step="1" value="5"></div>
         </div>
       </div>
       <div class="result-card">
-        <div class="result-row"><div class="result-label">Invested Amount</div><div class="result-val" id="res-inv">₹0</div></div>
-        <div class="result-row"><div class="result-label">Estimated Returns</div><div class="result-val" id="res-ret" style="color:var(--secondary);">₹0</div></div>
-        <div class="result-row" style="border-bottom:none; margin-top:8px;"><div class="result-label" style="font-weight:700;">Total Maturity Value</div><div class="result-val highlight" id="res-total">₹0</div></div>
+        <div class="result-row"><div class="result-label">Invested Amount</div><div class="result-val" id="res-inv">&#8377;0</div></div>
+        <div class="result-row"><div class="result-label">Estimated Returns</div><div class="result-val" id="res-ret" style="color:var(--secondary);">&#8377;0</div></div>
+        <div class="result-row" style="border-bottom:none; margin-top:8px;"><div class="result-label" style="font-weight:700;">Total Maturity Value</div><div class="result-val highlight" id="res-total">&#8377;0</div></div>
         <div class="chart-container"><canvas id="rdChart"></canvas></div>
       </div>
     </div>
   </div>
   <script src="../main.js"></script>
+  <script>if(window.lucide){lucide.createIcons();}</script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       let chart;

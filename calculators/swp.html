@@ -7,40 +7,48 @@
   <meta name="description" content="Calculate monthly withdrawal from your accumulated corpus using Finzoop's SWP Calculator. Plan your retirement income offline for free.">
   <link rel="stylesheet" href="../style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    window.CONTENTFUL_SPACE_ID       = 'tabc1qgaltm6';
+    window.CONTENTFUL_ACCESS_TOKEN   = 'VCpSt0x-mm6pOncY1cYlkkuU5b9UsD_cs_mINwRgs6I';
+    window.CONTENTFUL_PREVIEW_TOKEN  = 'Y3V82ept2t018xmuDJfyAf2Da86iZSsntizHFKwHmhk';
+  </script>
+  <script src="/cms.js" defer></script>
+  <script src="/cms-preview.js" defer></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body>
   <header class="header">
     <div class="container nav-container"><a href="../index.html" class="logo">Fin<span>zoop</span></a></div>
   </header>
-  <div class="container" style="padding-top: 120px;">
+  <div class="container" style="padding-top: 120px;" data-cms="calculator-meta" data-cms-slug="swp-calculator">
     <h1 style="text-align: center; margin-bottom: 40px;">SWP Calculator</h1>
     <div class="calc-container">
       <div class="card">
         <div class="input-group">
           <div class="input-header"><label class="input-label">Total Investment</label>
-          <div class="number-input-wrap"><span>₹</span><input type="text" class="sync-input" data-sync="swp-amt" value="1000000"></div></div>
+          <div class="number-input-wrap"><span>&#8377;</span><input type="text" class="sync-input" data-sync="swp-amt" value="1000000"></div></div>
           <div class="range-slider"><input type="range" class="sync-range" data-sync="swp-amt" min="1000" max="100000000" step="1000" value="1000000"></div>
         </div>
         <div class="input-group">
           <div class="input-header"><label class="input-label">Monthly Withdrawal</label>
-          <div class="number-input-wrap"><span>₹</span><input type="text" class="sync-input" data-sync="swp-with" value="5000"></div></div>
+          <div class="number-input-wrap"><span>&#8377;</span><input type="text" class="sync-input" data-sync="swp-with" value="5000"></div></div>
           <div class="range-slider"><input type="range" class="sync-range" data-sync="swp-with" min="500" max="100000" step="500" value="5000"></div>
         </div>
         <div class="input-group">
           <div class="input-header"><label class="input-label">Expected Annual Return (%)</label>
-          <div class="number-input-wrap"><input type="text" class="sync-input" data-sync="swp-rate" value="8" style="padding-left:12px;"><span style="left:auto;right:12px;">%</span></div></div>
+          <div class="number-input-wrap"><input type="text" class="sync-input" data-sync="swp-rate" value="8" style="padding-left:12px; padding-right:28px;"><span style="left:auto;right:12px;">%</span></div></div>
           <div class="range-slider"><input type="range" class="sync-range" data-sync="swp-rate" min="1" max="30" step="0.5" value="8"></div>
         </div>
         <div class="input-group">
           <div class="input-header"><label class="input-label">Time Period (Years)</label>
-          <div class="number-input-wrap"><input type="text" class="sync-input" data-sync="swp-years" value="10" style="padding-left:12px;"><span style="left:auto;right:12px;">Yr</span></div></div>
+          <div class="number-input-wrap"><input type="text" class="sync-input" data-sync="swp-years" value="10" style="padding-left:12px; padding-right:32px;"><span style="left:auto;right:12px;">Yr</span></div></div>
           <div class="range-slider"><input type="range" class="sync-range" data-sync="swp-years" min="1" max="40" step="1" value="10"></div>
         </div>
       </div>
       <div class="result-card">
-        <div class="result-row"><div class="result-label">Total Investment</div><div class="result-val" id="res-inv">₹0</div></div>
-        <div class="result-row"><div class="result-label">Total Withdrawn</div><div class="result-val highlight" id="res-with" style="color:var(--accent);">₹0</div></div>
-        <div class="result-row" style="border-bottom:none; margin-top:8px;"><div class="result-label" style="font-weight:700;">Final Corpus Value</div><div class="result-val highlight" id="res-total">₹0</div></div>
+        <div class="result-row"><div class="result-label">Total Investment</div><div class="result-val" id="res-inv">&#8377;0</div></div>
+        <div class="result-row"><div class="result-label">Total Withdrawn</div><div class="result-val highlight" id="res-with" style="color:var(--accent);">&#8377;0</div></div>
+        <div class="result-row" style="border-bottom:none; margin-top:8px;"><div class="result-label" style="font-weight:700;">Final Corpus Value</div><div class="result-val highlight" id="res-total">&#8377;0</div></div>
         <p id="depleted-msg" style="color:var(--accent); font-weight: 600; text-align:center; display:none; margin-top:10px;">Corpus depleted before the end of the duration!</p>
         <div class="chart-container"><canvas id="swpChart"></canvas></div>
       </div>
@@ -51,6 +59,7 @@
     </article>
   </div>
   <script src="../main.js"></script>
+  <script>if(window.lucide){lucide.createIcons();}</script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       let chart;

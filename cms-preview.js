@@ -25,7 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
     badge.addEventListener('click', (e) => {
       e.stopPropagation();
       e.preventDefault();
-      const adminUrl = window.CMS_URL ? `${window.CMS_URL}/admin` : 'http://localhost:1337/admin';
+      const spaceId = window.CONTENTFUL_SPACE_ID || 'tabc1qgaltm6';
+      // Link to entries page in Contentful
+      let adminUrl = `https://app.contentful.com/spaces/${spaceId}/entries`;
+      
+      // If we have a content type hint, we could deep link, but for now, the general entries list is safest
       window.open(adminUrl, '_blank');
     });
     
