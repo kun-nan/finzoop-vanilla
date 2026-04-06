@@ -7,10 +7,18 @@
   <meta name="description" content="Calculate your income tax for FY 2025-26. Compare old and new tax regime. Free income tax calculator with deductions for India.">
   <link rel="stylesheet" href="../style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    window.CMS_URL = 'http://localhost:1337';
+    window.CMS_TOKEN = '';
+  </script>
+  <script src="/cms.js" defer></script>
+  <script src="/publish-control.js" defer></script>
+  <script src="/cms-preview.js" defer></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body>
   <header class="header"><div class="container nav-container"><a href="../index.html" class="logo">Fin<span>zoop</span></a></div></header>
-  <div class="container" style="padding-top: 120px;">
+  <div class="container" style="padding-top: 120px;" data-cms="calculator-meta" data-cms-slug="income-tax-calculator">
     <h1 style="text-align: center; margin-bottom: 40px;">Income Tax Calculator (FY 2025-26)</h1>
     <div class="calc-container" style="grid-template-columns: 1fr 1fr;">
       
@@ -18,16 +26,16 @@
       <div class="card">
         <h3 style="margin-bottom: 24px;">Income & Deductions</h3>
         <div class="input-group">
-          <label class="input-label" style="display:block; margin-bottom:8px;">Annual Gross Salary (₹)</label>
+          <label class="input-label" style="display:block; margin-bottom:8px;">Annual Gross Salary (&#8377;)</label>
           <input type="number" id="tax-income" value="1500000" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border);">
         </div>
         <div style="font-size: 12px; font-weight: 700; color:var(--text-secondary); margin: 24px 0 16px;">OLD REGIME DEDUCTIONS (Optional)</div>
         <div class="input-group">
-          <label class="input-label" style="display:block; margin-bottom:8px;">Section 80C (EPF, PPF, ELSS) (Max ₹1.5L)</label>
+          <label class="input-label" style="display:block; margin-bottom:8px;">Section 80C (EPF, PPF, ELSS) (Max &#8377;1.5L)</label>
           <input type="number" id="tax-80c" value="150000" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border);">
         </div>
         <div class="input-group">
-          <label class="input-label" style="display:block; margin-bottom:8px;">Section 80D (Health Insurance) (Max ₹75K)</label>
+          <label class="input-label" style="display:block; margin-bottom:8px;">Section 80D (Health Insurance) (Max &#8377;75K)</label>
           <input type="number" id="tax-80d" value="25000" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border);">
         </div>
         <div class="input-group">
@@ -43,13 +51,13 @@
         <div style="display: flex; gap: 20px; text-align: center; margin-bottom: 30px;">
           <div style="flex: 1; padding: 16px; background: #fff; border-radius: 12px; border: 1px solid var(--border);">
             <div style="font-weight: 700; color: var(--text-secondary); font-size: 14px; margin-bottom: 8px;">NEW REGIME</div>
-            <div id="new-tax" style="font-size: 28px; font-weight: 800; color: var(--primary);">₹0</div>
-            <div id="new-taxable" style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Taxable: ₹0</div>
+            <div id="new-tax" style="font-size: 28px; font-weight: 800; color: var(--primary);">&#8377;0</div>
+            <div id="new-taxable" style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Taxable: &#8377;0</div>
           </div>
           <div style="flex: 1; padding: 16px; background: #fff; border-radius: 12px; border: 1px solid var(--border);">
             <div style="font-weight: 700; color: var(--text-secondary); font-size: 14px; margin-bottom: 8px;">OLD REGIME</div>
-            <div id="old-tax" style="font-size: 28px; font-weight: 800; color: var(--text-primary);">₹0</div>
-            <div id="old-taxable" style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Taxable: ₹0</div>
+            <div id="old-tax" style="font-size: 28px; font-weight: 800; color: var(--text-primary);">&#8377;0</div>
+            <div id="old-taxable" style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Taxable: &#8377;0</div>
           </div>
         </div>
 
@@ -62,6 +70,7 @@
     </div>
   </div>
   <script src="../main.js"></script>
+  <script>if(window.lucide){lucide.createIcons();}</script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       let chart;
@@ -104,14 +113,15 @@
 
         const rec = document.getElementById('recommendation');
         if (resNew.tax < resOld.tax) {
-          rec.innerText = `💡 New Regime saves you ${window.formatINR(resOld.tax - resNew.tax)}`;
+          rec.innerHTML = `<i data-lucide="lightbulb" class="icon-sm" style="vertical-align:bottom;"></i> New Regime saves you ${window.formatINR(resOld.tax - resNew.tax)}`;
           rec.style.color = '#1B4FD8'; rec.style.background = 'rgba(27,79,216,0.1)';
         } else if (resOld.tax < resNew.tax) {
-          rec.innerText = `💡 Old Regime saves you ${window.formatINR(resNew.tax - resOld.tax)}`;
+          rec.innerHTML = `<i data-lucide="lightbulb" class="icon-sm" style="vertical-align:bottom;"></i> Old Regime saves you ${window.formatINR(resNew.tax - resOld.tax)}`;
           rec.style.color = '#00C896'; rec.style.background = 'rgba(0,200,150,0.1)';
         } else {
           rec.innerText = `Both Regimes result in same tax.`;
         }
+        if(window.lucide){lucide.createIcons();}
 
         if (chart) { chart.data.datasets[0].data = [resNew.tax, resOld.tax]; chart.update(); }
         else {
