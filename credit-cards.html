@@ -12,33 +12,13 @@
     window.CONTENTFUL_ACCESS_TOKEN   = 'VCpSt0x-mm6pOncY1cYlkkuU5b9UsD_cs_mINwRgs6I';
     window.CONTENTFUL_PREVIEW_TOKEN  = 'Y3V82ept2t018xmuDJfyAf2Da86iZSsntizHFKwHmhk';
   </script>
-  <script src="/cms.js" defer></script>
-  <script src="/cms-preview.js" defer></script>
+  <script src="shared-components.js"></script>
+  <script src="products.js"></script>
+  <script src="page-sections.js"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
-<body data-cms-page="credit-cards">
+<body data-cms-page="credit-cards" data-product-page="credit-cards">
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container nav-container">
-      <a href="index.html" class="logo">Fin<span>zoop</span></a>
-      <button class="hamburger" aria-label="Toggle Navigation"><i data-lucide="menu" class="icon-sm"></i></button>
-      <nav class="nav-links">
-        <a href="index.html" class="nav-link">Home</a>
-        <div class="dropdown">
-          <a href="#" class="nav-link active">Products ▾</a>
-          <div class="dropdown-menu">
-            <a href="loans.html" class="dropdown-item">Loans</a>
-            <a href="credit-cards.html" class="dropdown-item" style="color: var(--primary); font-weight: 600;">Credit Cards</a>
-            <a href="insurance.html" class="dropdown-item">Insurance</a>
-          </div>
-        </div>
-        <a href="calculators.html" class="nav-link">Calculators</a>
-        <a href="about.html" class="nav-link">About</a>
-        <a href="blog.html" class="nav-link">Blog</a>
-      </nav>
-    </div>
-  </header>
 
   <div class="container" style="padding-top: 120px;" data-cms="page-seo" data-cms-slug="credit-cards-page">
     <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -46,77 +26,20 @@
     </nav>
   </div>
 
+  <section class="section" data-cms="hero" data-cms-id="credit-cards-hero">
+    <div class="container">
+      <h1 style="text-align: center; margin-bottom: 10px;" data-hero="heading">Find Your Perfect Credit Card</h1>
+      <p style="text-align: center; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;" data-hero="subheading">Compare 50+ credit cards across top banks. Maximize your rewards, lounge access, and cashback.</p>
+    </div>
+  </section>
+
   <section class="section">
     <div class="container">
-      <h1 style="text-align: center; margin-bottom: 10px;">Find Your Perfect Credit Card</h1>
-      <p style="text-align: center; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">Compare 50+ credit cards across top banks. Maximize your rewards, lounge access, and cashback.</p>
-
-      <!-- Filter Bar -->
-      <div class="toggle-group" style="max-width: 800px; margin: 0 auto 40px; display: flex; flex-wrap: wrap;">
-        <button class="active">All Cards</button>
-        <button>Cashback</button>
-        <button>Travel & Lounge</button>
-        <button>Shopping</button>
-        <button>Lifetime Free</button>
+      <div class="product-tabs" data-cms="product-categories">
+        <!-- Categories injected by products.js -->
       </div>
-
-      <!-- Card Grid -->
-      <div class="grid-3" style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));">
-        
-        <!-- Dummy Card 1 -->
-        <div class="card" style="display: flex; flex-direction: column;">
-          <div style="height: 180px; background: linear-gradient(135deg, #4A148C, #1A237E); border-radius: 12px; margin-bottom: 24px; position:relative;">
-             <span style="position:absolute; top:10px; right:10px; background:rgba(255,255,255,0.2); color:#fff; padding:4px 8px; border-radius:4px; font-size:11px; font-weight:bold;">CASHBACK</span>
-          </div>
-          <h3 style="font-size: 20px; flex-grow: 1;">Finzoop Cashback Ultimate</h3>
-          <p class="small" style="color: var(--text-primary); font-weight: 600;">Annual Fee: ₹499 (Waived on ₹1L spend)</p>
-          <ul style="margin: 0 0 24px 20px; font-size: 14px; color: var(--text-secondary); line-height: 1.8;">
-            <li>5% Cashback on online shopping</li>
-            <li>1% Cashback on offline spends</li>
-            <li>4 domestic lounge visits/year</li>
-          </ul>
-          <div style="display: flex; gap: 10px;">
-            <a href="#" class="btn btn-primary" style="flex: 1; padding: 10px;">Apply Now</a>
-            <button class="btn btn-outline" style="padding: 10px 16px;">+ Compare</button>
-          </div>
-        </div>
-
-        <!-- Dummy Card 2 -->
-        <div class="card" style="display: flex; flex-direction: column;">
-          <div style="height: 180px; background: linear-gradient(135deg, #000, #333); border-radius: 12px; margin-bottom: 24px; position:relative;">
-            <span style="position:absolute; top:10px; right:10px; background:rgba(255,255,255,0.2); color:#fff; padding:4px 8px; border-radius:4px; font-size:11px; font-weight:bold;">PREMIUM TRAVEL</span>
-          </div>
-          <h3 style="font-size: 20px; flex-grow: 1;">Finzoop Global Reserve</h3>
-          <p class="small" style="color: var(--text-primary); font-weight: 600;">Annual Fee: ₹2,999</p>
-          <ul style="margin: 0 0 24px 20px; font-size: 14px; color: var(--text-secondary); line-height: 1.8;">
-            <li>Unlimited domestic lounge access</li>
-            <li>Priority Pass membership (6 intl visits)</li>
-            <li>Zero forex markup fee</li>
-          </ul>
-          <div style="display: flex; gap: 10px;">
-            <a href="#" class="btn btn-primary" style="flex: 1; padding: 10px;">Apply Now</a>
-            <button class="btn btn-outline" style="padding: 10px 16px;">+ Compare</button>
-          </div>
-        </div>
-
-        <!-- Dummy Card 3 -->
-        <div class="card" style="display: flex; flex-direction: column;">
-          <div style="height: 180px; background: linear-gradient(135deg, #E65100, #F57C00); border-radius: 12px; margin-bottom: 24px; position:relative;">
-            <span style="position:absolute; top:10px; right:10px; background:rgba(255,255,255,0.2); color:#fff; padding:4px 8px; border-radius:4px; font-size:11px; font-weight:bold;">LIFETIME FREE</span>
-          </div>
-          <h3 style="font-size: 20px; flex-grow: 1;">Finzoop Entry Rewards</h3>
-          <p class="small" style="color: var(--text-primary); font-weight: 600;">Annual Fee: ₹0 (Lifetime Free)</p>
-          <ul style="margin: 0 0 24px 20px; font-size: 14px; color: var(--text-secondary); line-height: 1.8;">
-            <li>10X Reward Points on dining</li>
-            <li>No joining fee ever</li>
-            <li>1% fuel surcharge waiver</li>
-          </ul>
-          <div style="display: flex; gap: 10px;">
-            <a href="#" class="btn btn-primary" style="flex: 1; padding: 10px;">Apply Now</a>
-            <button class="btn btn-outline" style="padding: 10px 16px;">+ Compare</button>
-          </div>
-        </div>
-
+      <div id="product-grid-container" data-cms="product-grid">
+        <!-- Products injected by products.js -->
       </div>
     </div>
   </section>
@@ -136,20 +59,6 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <div class="footer-logo">Fin<span style="color:var(--secondary)">zoop</span></div>
-          <p class="disclaimer">Finzoop acts solely as a distributor. Credit card issuance is at the complete discretion of the partner bank based on your credit profile.</p>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <div>&copy; 2025 Finzoop. All Rights Reserved.</div>
-      </div>
-    </div>
-  </footer>
 
   <script src="main.js"></script>
   <script>if(window.lucide){lucide.createIcons();}</script>

@@ -13,22 +13,12 @@
     window.CONTENTFUL_ACCESS_TOKEN   = 'VCpSt0x-mm6pOncY1cYlkkuU5b9UsD_cs_mINwRgs6I';
     window.CONTENTFUL_PREVIEW_TOKEN  = 'Y3V82ept2t018xmuDJfyAf2Da86iZSsntizHFKwHmhk';
   </script>
-  <script src="/cms.js" defer></script>
-  <script src="/cms-preview.js" defer></script>
+  <script src="../shared-components.js"></script>
+  <script src="../page-sections.js"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body data-cms-page="lumpsum">
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container nav-container">
-      <a href="../index.html" class="logo">Fin<span>zoop</span></a>
-      <nav class="nav-links">
-        <a href="../index.html" class="nav-link">Home</a>
-        <a href="../calculators.html" class="nav-link active">Calculators <i data-lucide="chevron-down" class="icon-sm"></i></a>
-      </nav>
-    </div>
-  </header>
 
   <div class="container" style="padding-top: 120px;" data-cms="calculator-meta" data-cms-slug="lumpsum-calculator">
     <nav class="breadcrumb">
@@ -64,7 +54,7 @@
             </div>
           </div>
           <div class="range-slider">
-            <input type="range" class="sync-range" data-sync="lum-rate" min="1" max="30" step="0.5" value="12">
+            <input type="range" class="sync-range" data-sync="lum-rate" min="1" max="30" step="0.01" value="12">
           </div>
         </div>
 
@@ -111,9 +101,6 @@
     </article>
   </div>
 
-  <footer class="footer">
-    <div class="container" style="text-align: center;">&copy; 2025 Finzoop. All Rights Reserved.</div>
-  </footer>
 
   <script src="../main.js"></script>
   <script>if(window.lucide) { lucide.createIcons(); }</script>

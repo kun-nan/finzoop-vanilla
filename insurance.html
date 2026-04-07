@@ -12,31 +12,13 @@
     window.CONTENTFUL_ACCESS_TOKEN   = 'VCpSt0x-mm6pOncY1cYlkkuU5b9UsD_cs_mINwRgs6I';
     window.CONTENTFUL_PREVIEW_TOKEN  = 'Y3V82ept2t018xmuDJfyAf2Da86iZSsntizHFKwHmhk';
   </script>
-  <script src="/cms.js" defer></script>
-  <script src="/cms-preview.js" defer></script>
+  <script src="shared-components.js"></script>
+  <script src="products.js"></script>
+  <script src="page-sections.js"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
-<body data-cms-page="insurance">
+<body data-cms-page="insurance" data-product-page="insurance">
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container nav-container">
-      <a href="index.html" class="logo">Fin<span>zoop</span></a>
-      <button class="hamburger" aria-label="Toggle Navigation"><i data-lucide="menu" class="icon-sm"></i></button>
-      <nav class="nav-links">
-        <a href="index.html" class="nav-link">Home</a>
-        <div class="dropdown">
-          <a href="#" class="nav-link active">Products ▾</a>
-          <div class="dropdown-menu">
-            <a href="loans.html" class="dropdown-item">Loans</a>
-            <a href="insurance.html" class="dropdown-item" style="color: var(--primary); font-weight: 600;">Insurance</a>
-            <a href="mutual-funds.html" class="dropdown-item">Mutual Funds</a>
-          </div>
-        </div>
-        <a href="calculators.html" class="nav-link">Calculators</a>
-      </nav>
-    </div>
-  </header>
 
   <div class="container" style="padding-top: 120px;" data-cms="page-seo" data-cms-slug="insurance-page">
     <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -44,50 +26,20 @@
     </nav>
   </div>
 
+  <section class="section" data-cms="hero" data-cms-id="insurance-hero">
+    <div class="container">
+      <h1 style="text-align: center; margin-bottom: 20px;" data-hero="heading">Protect What Matters Most</h1>
+      <p style="text-align: center; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;" data-hero="subheading">Compare 100+ plans from India's top insurers. Finzoop offers unbiased advice and stands by you during claims.</p>
+    </div>
+  </section>
+
   <section class="section">
     <div class="container">
-      <h1 style="text-align: center; margin-bottom: 20px;">Protect What Matters Most</h1>
-      <p style="text-align: center; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">Compare 100+ plans from India's top insurers. Finzoop offers unbiased advice and stands by you during claims.</p>
-
-      <div class="toggle-group" style="max-width: 800px; margin: 0 auto 40px; display: flex; flex-wrap: wrap;">
-        <button class="active">Term Life</button>
-        <button>Health</button>
-        <button>Motor (Car/Bike)</button>
+      <div class="product-tabs" data-cms="product-categories">
+        <!-- Categories injected by products.js -->
       </div>
-
-      <div class="grid-3" style="grid-template-columns: 2fr 1fr;">
-        <div class="card">
-          <h2>Term Life Insurance</h2>
-          <p>Secure your family's financial future with a high cover at a low premium. Get a cover of ₹1 Crore starting as low as ₹490/month.</p>
-          <div style="margin: 24px 0;">
-            <div style="font-weight: 600; margin-bottom: 10px;">Why Term Insurance?</div>
-            <ul style="margin-left: 20px; color: var(--text-secondary);">
-              <li>Pure protection - cheapest form of life insurance</li>
-              <li>Fixed premiums for the entire term</li>
-              <li>Tax benefits under Section 80C and 10(10D)</li>
-            </ul>
-          </div>
-          <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--light-bg); border-radius: 12px; border: 1px solid var(--border);">
-            <div>
-               <div style="font-weight: 600; font-size: 14px;">Claim Settlement Ratio (CSR)</div>
-               <div style="font-size: 12px; color: var(--text-secondary);">Look for insurers with CSR > 98%</div>
-            </div>
-            <div style="font-size: 24px; font-weight: 700; color: var(--secondary);">99.2%</div>
-          </div>
-        </div>
-
-        <div class="card" style="background: var(--light-bg); text-align: center;">
-          <h3 style="margin-bottom: 20px;">Get a Quick Quote</h3>
-          <div style="margin-bottom: 16px; text-align: left;">
-            <label style="font-size: 13px; font-weight: 600;">Your Age</label>
-            <input type="number" placeholder="e.g. 30" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; margin-top: 4px;">
-          </div>
-          <div style="margin-bottom: 24px; text-align: left;">
-            <label style="font-size: 13px; font-weight: 600;">Cover Amount</label>
-            <input type="number" placeholder="e.g. 10000000" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; margin-top: 4px;">
-          </div>
-          <a href="#" class="btn btn-primary" style="width: 100%;">View Plans &rarr;</a>
-        </div>
+      <div id="product-grid-container" data-cms="product-grid">
+        <!-- Products injected by products.js -->
       </div>
     </div>
   </section>
@@ -114,20 +66,6 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="footer" style="margin-top: 0;">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <div class="footer-logo">Fin<span style="color:var(--secondary)">zoop</span></div>
-          <p class="disclaimer">Finzoop is an IRDAI-registered Corporate Agent. Insurance is the subject matter of solicitation. Please read the policy document carefully before concluding a sale.</p>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <div>&copy; 2025 Finzoop. All Rights Reserved.</div>
-      </div>
-    </div>
-  </footer>
 
   <script src="main.js"></script>
   <script>if(window.lucide){lucide.createIcons();}</script>

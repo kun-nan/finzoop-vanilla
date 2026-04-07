@@ -14,27 +14,13 @@
   <script src="/cms.js" defer></script>
   <script src="/cms-preview.js" defer></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="shared-components.js"></script>
+  <script src="products.js"></script>
+  <script src="page-sections.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
-<body data-cms-page="investments">
+<body data-cms-page="investments" data-product-page="investments">
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container nav-container">
-      <a href="index.html" class="logo">Fin<span>zoop</span></a>
-      <button class="hamburger" aria-label="Toggle Navigation"><i data-lucide="menu" class="icon-sm"></i></button>
-      <nav class="nav-links">
-        <a href="index.html" class="nav-link">Home</a>
-        <div class="dropdown">
-          <a href="#" class="nav-link active">Products ▾</a>
-          <div class="dropdown-menu">
-            <a href="mutual-funds.html" class="dropdown-item">Mutual Funds</a>
-            <a href="investments.html" class="dropdown-item" style="color: var(--primary); font-weight: 600;">Investments</a>
-          </div>
-        </div>
-        <a href="calculators.html" class="nav-link">Calculators</a>
-      </nav>
-    </div>
-  </header>
 
   <div class="container" style="padding-top: 120px;" data-cms="page-seo" data-cms-slug="investments-page">
     <nav class="breadcrumb">
@@ -42,63 +28,24 @@
     </nav>
   </div>
 
-  <section class="section">
+  <section class="section" data-cms="hero" data-cms-id="investments-hero">
     <div class="container">
-      <h1 style="text-align: center;">Fixed Income Investments</h1>
-      <p style="text-align: center; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">Secure your capital with predictable, guaranteed returns through FDs, Corporate Bonds, and Government Securities.</p>
-
-      <div class="card" style="margin-bottom: 60px;">
-        <h2>Top Fixed Deposit Rates (Jan 2025)</h2>
-        <div style="overflow-x: auto;">
-          <table style="width: 100%; border-collapse: collapse; text-align: left;">
-            <thead>
-              <tr style="border-bottom: 2px solid var(--border);">
-                <th style="padding: 16px;">Bank</th>
-                <th style="padding: 16px;">1 Year</th>
-                <th style="padding: 16px;">3 Years</th>
-                <th style="padding: 16px;">Senior Citizens (3Y)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="border-bottom: 1px solid var(--border);">
-                <td style="padding: 16px; font-weight: 600;">Top Small Finance Bank</td><td style="padding: 16px;">8.25%</td><td style="padding: 16px;">8.50%</td><td style="padding: 16px; color: var(--secondary);">9.00%</td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border);">
-                 <td style="padding: 16px; font-weight: 600;">Leading Private Bank</td><td style="padding: 16px;">7.10%</td><td style="padding: 16px;">7.00%</td><td style="padding: 16px; color: var(--secondary);">7.50%</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div style="text-align: right; margin-top: 16px;">
-          <a href="calculators/fd.html" style="font-weight: 600;">Use Detailed FD Calculator →</a>
-        </div>
-      </div>
-
-      <div class="grid-3" style="grid-template-columns: 1fr 1fr;">
-        <div class="card">
-          <h2>Corporate Bonds</h2>
-          <p>Earn higher returns (9-11%) than traditional FDs by investing in highly rated corporate bonds. Best suited for high-net-worth individuals looking for steady cash flow.</p>
-        </div>
-        <div class="card">
-          <h2>Government Securities (G-Secs)</h2>
-          <p>Sovereign guaranteed bonds issued by the RBI. Absolutely zero credit risk. Ideal for capital preservation over long durations.</p>
-        </div>
-      </div>
-
+      <h1 style="text-align: center;" data-hero="heading">Fixed Income Investments</h1>
+      <p style="text-align: center; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;" data-hero="subheading">Secure your capital with predictable, guaranteed returns through FDs, Corporate Bonds, and Government Securities.</p>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
+  <section class="section">
     <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <div class="footer-logo">Fin<span style="color:var(--secondary)">zoop</span></div>
-          <p class="disclaimer">Finzoop is a distributor of financial products. Fixed deposits in scheduled commercial banks are insured by DICGC up to ₹5 Lakhs.</p>
-        </div>
+      <div class="product-tabs" data-cms="product-categories">
+        <!-- Categories injected by products.js -->
+      </div>
+      <div id="product-grid-container" data-cms="product-grid">
+        <!-- Products injected by products.js -->
       </div>
     </div>
-  </footer>
+  </section>
+
 
   <script src="main.js"></script>
   <script>if(window.lucide){lucide.createIcons();}</script>

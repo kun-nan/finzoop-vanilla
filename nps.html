@@ -7,27 +7,13 @@
   <meta name="description" content="Secure your retirement with the National Pension System (NPS). Save up to ₹50,000 extra in taxes u/s 80CCD(1B). Calculate your pension corpus today.">
   <link rel="canonical" href="https://finzoop.com/nps.html">
   <link rel="stylesheet" href="style.css">
+  <script src="shared-components.js"></script>
+  <script src="products.js"></script>
+  <script src="page-sections.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
-<body data-cms-page="nps">
+<body data-cms-page="nps" data-product-page="nps">
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container nav-container">
-      <a href="index.html" class="logo">Fin<span>zoop</span></a>
-      <button class="hamburger" aria-label="Toggle Navigation"><i data-lucide="menu" class="icon-sm"></i></button>
-      <nav class="nav-links">
-        <a href="index.html" class="nav-link">Home</a>
-        <div class="dropdown">
-          <a href="#" class="nav-link active">Products ▾</a>
-          <div class="dropdown-menu">
-            <a href="mutual-funds.html" class="dropdown-item">Mutual Funds</a>
-            <a href="nps.html" class="dropdown-item" style="color: var(--primary); font-weight: 600;">NPS</a>
-          </div>
-        </div>
-        <a href="calculators.html" class="nav-link">Calculators</a>
-      </nav>
-    </div>
-  </header>
 
   <div class="container" style="padding-top: 120px;">
     <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -35,33 +21,20 @@
     </nav>
   </div>
 
+  <section class="section" data-cms="hero" data-cms-id="nps-hero">
+    <div class="container">
+      <h1 style="text-align: center;" data-hero="heading">National Pension System (NPS)</h1>
+      <p style="text-align: center; margin-bottom: 40px; max-width: 600px; margin: 0 auto 40px;" data-hero="subheading">The smartest way to build your retirement wealth while enjoying exclusive tax benefits.</p>
+    </div>
+  </section>
+
   <section class="section">
     <div class="container">
-      <h1 style="text-align: center;">National Pension System (NPS)</h1>
-      <p style="text-align: center; margin-bottom: 40px; max-width: 600px; margin: 0 auto 40px;">The smartest way to build your retirement wealth while enjoying exclusive tax benefits.</p>
-
-      <div class="grid-3" style="grid-template-columns: 1fr 1fr;">
-        <div class="card" style="background: var(--light-bg);">
-          <h2 style="font-size: 24px; color: var(--primary);">Tier 1 Account</h2>
-          <p>The mandatory retirement account with tax benefits.</p>
-          <ul style="margin-left: 20px; color: var(--text-secondary); margin-bottom: 24px;">
-            <li>Lock-in until age 60</li>
-            <li>Min. annual contribution: ₹1,000</li>
-            <li>Extra ₹50,000 tax deduction u/s 80CCD(1B)</li>
-            <li>60% corpus is tax-free on withdrawal, 40% mandatory annuity</li>
-          </ul>
-        </div>
-        
-        <div class="card">
-          <h2 style="font-size: 24px;">Tier 2 Account</h2>
-          <p>A voluntary investment account with greater flexibility.</p>
-          <ul style="margin-left: 20px; color: var(--text-secondary); margin-bottom: 24px;">
-            <li>No lock-in period (withdraw anytime)</li>
-            <li>No minimum annual contribution after initial setup</li>
-            <li>No tax deductions available</li>
-            <li>Requires an active Tier 1 account</li>
-          </ul>
-        </div>
+      <div class="product-tabs" data-cms="product-categories">
+        <!-- Categories injected by products.js -->
+      </div>
+      <div id="product-grid-container" data-cms="product-grid">
+        <!-- Products injected by products.js -->
       </div>
     </div>
   </section>
@@ -108,17 +81,6 @@
     </script>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <div class="footer-logo">Fin<span style="color:var(--secondary)">zoop</span></div>
-          <p class="disclaimer">Finzoop is a PFRDA registered Point of Presence (PoP). NPS returns are market-linked and not guaranteed.</p>
-        </div>
-      </div>
-    </div>
-  </footer>
 
   <script src="main.js"></script>
 </body>

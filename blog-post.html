@@ -13,30 +13,11 @@
   </script>
   <!-- Contentful Rich Text Renderer -->
   <script src="https://unpkg.com/@contentful/rich-text-html-renderer@16.0.0/dist/rich-text-html-renderer.es5.min.js"></script>
-  <script src="/cms.js" defer></script>
-  <script src="/blog.js" defer></script>
-  <script src="/cms-preview.js" defer></script>
+  <script src="shared-components.js"></script>
+  <script src="page-sections.js"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body data-cms-page="blog-post">
-  <header class="header">
-    <div class="container nav-container">
-      <a href="index.html" class="logo">Fin<span>zoop</span></a>
-      <button class="hamburger" aria-label="Toggle Navigation"><i data-lucide="menu" class="icon-sm"></i></button>
-      <nav class="nav-links">
-        <a href="index.html" class="nav-link">Home</a>
-        <div class="dropdown">
-          <a href="#" class="nav-link">Products <i data-lucide="chevron-down" class="icon-sm"></i></a>
-          <div class="dropdown-menu">
-            <a href="loans.html" class="dropdown-item">Loans</a>
-            <a href="mutual-funds.html" class="dropdown-item">Mutual Funds</a>
-          </div>
-        </div>
-        <a href="calculators.html" class="nav-link">Calculators</a>
-        <a href="blog.html" class="nav-link active">Blog</a>
-      </nav>
-    </div>
-  </header>
 
   <main class="container" style="padding-top: 120px; padding-bottom: 80px;">
     <!-- Dynamic Content Loading Area -->
@@ -51,9 +32,6 @@
     </div>
   </main>
 
-  <footer class="footer">
-    <div class="container" style="text-align: center;">&copy; 2025 Finzoop. All Rights Reserved.</div>
-  </footer>
 
   <script src="main.js"></script>
   <script>if(window.lucide){lucide.createIcons();}</script>

@@ -11,8 +11,8 @@
     window.CONTENTFUL_ACCESS_TOKEN   = 'VCpSt0x-mm6pOncY1cYlkkuU5b9UsD_cs_mINwRgs6I';
     window.CONTENTFUL_PREVIEW_TOKEN  = 'Y3V82ept2t018xmuDJfyAf2Da86iZSsntizHFKwHmhk';
   </script>
-  <script src="/cms.js" defer></script>
-  <script src="/cms-preview.js" defer></script>
+  <script src="shared-components.js"></script>
+  <script src="page-sections.js"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
   <script type="application/ld+json">
@@ -27,38 +27,6 @@
 </head>
 <body data-cms-page="about">
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container nav-container">
-      <a href="index.html" class="logo">Fin<span>zoop</span></a>
-      <button class="hamburger" aria-label="Toggle Navigation"><i data-lucide="menu" class="icon-sm"></i></button>
-      <nav class="nav-links">
-        <a href="index.html" class="nav-link">Home</a>
-        <div class="dropdown">
-          <a href="#" class="nav-link">Products ▾</a>
-          <div class="dropdown-menu">
-            <a href="loans.html" class="dropdown-item">Loans</a>
-            <a href="credit-cards.html" class="dropdown-item">Credit Cards</a>
-            <a href="insurance.html" class="dropdown-item">Insurance</a>
-            <a href="mutual-funds.html" class="dropdown-item">Mutual Funds</a>
-            <a href="nps.html" class="dropdown-item">NPS</a>
-            <a href="investments.html" class="dropdown-item">Investments</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="calculators.html" class="nav-link">Calculators ▾</a>
-          <div class="dropdown-menu">
-            <a href="calculators/sip.html" class="dropdown-item">SIP Calculator</a>
-            <a href="calculators.html" class="dropdown-item" style="color: var(--primary); font-weight: 600;">View All 14 Tools →</a>
-          </div>
-        </div>
-        <a href="about.html" class="nav-link active">About</a>
-        <a href="blog.html" class="nav-link">Blog</a>
-        <a href="contact.html" class="nav-link">Contact</a>
-        <a href="#" class="btn btn-primary" style="margin-left: 16px;">Check Eligibility</a>
-      </nav>
-    </div>
-  </header>
 
   <div class="container" style="padding-top: 120px;" data-cms="page-seo" data-cms-slug="about-page">
     <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -110,7 +78,7 @@
   </section>
 
   <!-- Licenses and Partners -->
-  <section class="section">
+  <section class="section" data-cms="partners">
     <div class="container">
       <h2 style="text-align: center;">Regulatory Licenses</h2>
       <div class="grid-3" style="margin-bottom: 60px;">
@@ -129,7 +97,7 @@
       </div>
 
       <h2 style="text-align: center;">Our Partners</h2>
-      <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 60px;">
+      <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 60px;" data-partners="grid">
         <div style="width: 160px; height: 60px; background: #fff; border: 1px solid var(--border); border-radius: 8px; display: flex; align-items:center; justify-content:center; color: var(--text-secondary); font-weight:600;">Partner Bank 1</div>
         <div style="width: 160px; height: 60px; background: #fff; border: 1px solid var(--border); border-radius: 8px; display: flex; align-items:center; justify-content:center; color: var(--text-secondary); font-weight:600;">Top Insurer 2</div>
         <div style="width: 160px; height: 60px; background: #fff; border: 1px solid var(--border); border-radius: 8px; display: flex; align-items:center; justify-content:center; color: var(--text-secondary); font-weight:600;">Leading AMC 3</div>
@@ -143,41 +111,6 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <div class="footer-logo">Fin<span style="color:var(--secondary)">zoop</span></div>
-          <p style="font-size: 14px; margin-bottom: 24px; max-width: 300px;">Your Financial Journey, Simplified.</p>
-          <p class="disclaimer">Finzoop is a financial services distribution platform. Mutual fund investments are subject to market risks. Read all scheme-related documents carefully. Insurance is the subject matter of solicitation.</p>
-        </div>
-        <div class="footer-col">
-          <h4>Quick Links</h4>
-          <ul class="footer-links">
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="loans.html">Loans</a></li>
-            <li><a href="mutual-funds.html">Mutual Funds</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Calculators</h4>
-          <ul class="footer-links">
-            <li><a href="calculators/sip.html">SIP Calculator</a></li>
-            <li><a href="calculators/emi.html">EMI Calculator</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <div>&copy; 2025 Finzoop. All Rights Reserved.</div>
-        <div style="display: flex; gap: 16px;">
-          <a href="privacy-policy.html" style="color: #94A3B8;">Privacy Policy</a>
-          <a href="terms.html" style="color: #94A3B8;">Terms & Conditions</a>
-        </div>
-      </div>
-    </div>
-  </footer>
 
   <script src="main.js"></script>
   <script>if(window.lucide){lucide.createIcons();}</script>

@@ -14,8 +14,8 @@
     window.CONTENTFUL_ACCESS_TOKEN   = 'VCpSt0x-mm6pOncY1cYlkkuU5b9UsD_cs_mINwRgs6I';
     window.CONTENTFUL_PREVIEW_TOKEN  = 'Y3V82ept2t018xmuDJfyAf2Da86iZSsntizHFKwHmhk';
   </script>
-  <script src="/cms.js" defer></script>
-  <script src="/cms-preview.js" defer></script>
+  <script src="../shared-components.js"></script>
+  <script src="../page-sections.js"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <script type="application/ld+json">
   {
@@ -31,31 +31,6 @@
 </head>
 <body data-cms-page="sip">
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container nav-container">
-      <a href="../index.html" class="logo">Fin<span>zoop</span></a>
-      <button class="hamburger" aria-label="Toggle Navigation"><i data-lucide="menu" class="icon-sm"></i></button>
-      <nav class="nav-links">
-        <a href="../index.html" class="nav-link">Home</a>
-        <div class="dropdown">
-          <a href="#" class="nav-link">Products <i data-lucide="chevron-down" class="icon-sm"></i></a>
-          <div class="dropdown-menu">
-            <a href="../loans.html" class="dropdown-item">Loans</a>
-            <a href="../mutual-funds.html" class="dropdown-item">Mutual Funds</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="../calculators.html" class="nav-link active">Calculators <i data-lucide="chevron-down" class="icon-sm"></i></a>
-          <div class="dropdown-menu">
-            <a href="sip.html" class="dropdown-item" style="color:var(--primary); font-weight:600;">SIP Calculator</a>
-            <a href="lumpsum.html" class="dropdown-item">Lumpsum Calculator</a>
-            <a href="emi.html" class="dropdown-item">EMI Calculator</a>
-          </div>
-        </div>
-      </nav>
-    </div>
-  </header>
 
   <div class="container" style="padding-top: 120px;" data-cms="calculator-meta" data-cms-slug="sip-calculator">
     <nav class="breadcrumb">
@@ -91,7 +66,7 @@
             </div>
           </div>
           <div class="range-slider">
-            <input type="range" class="sync-range" data-sync="sip-rate" min="1" max="30" step="0.5" value="12">
+            <input type="range" class="sync-range" data-sync="sip-rate" min="1" max="30" step="0.01" value="12">
           </div>
         </div>
 
@@ -156,38 +131,16 @@
       </ol>
 
       <h2>Frequently Asked Questions</h2>
-      <div class="faq-accordion" itemscope itemtype="https://schema.org/FAQPage">
-        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-          <div class="faq-q" itemprop="name">Are SIP returns guaranteed?</div>
-          <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-             <div itemprop="text"><p>No. Mutual fund SIP returns are linked to the performance of the financial markets (equity or debt). However, historically, equity mutual funds have delivered inflation-beating returns over long periods (7+ years).</p></div>
-          </div>
-        </div>
-        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-          <div class="faq-q" itemprop="name">Can I pause or stop my SIP anytime?</div>
-          <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-             <div itemprop="text"><p>Yes, mutual funds offer absolute flexibility. You can pause, stop, or modify your SIP amount at any time without any penalties, unless the fund is an ELSS (which has a 3-year lock-in per installment).</p></div>
-          </div>
-        </div>
-        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-          <div class="faq-q" itemprop="name">Is 12% a realistic return expectation?</div>
-          <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-             <div itemprop="text"><p>For diversified equity mutual funds in India, a long-term CAGR of 10% to 12% is considered a realistic assumption based on historical data. However, shorter horizons may experience significant volatility.</p></div>
-          </div>
-        </div>
-        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-          <div class="faq-q" itemprop="name">Does SIP save taxes?</div>
-          <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-             <div itemprop="text"><p>Only investments made in Equity Linked Savings Schemes (ELSS) via SIP qualify for tax deduction under Section 80C up to &#8377;1.5 Lakhs. Regular equity and debt SIPs do not offer 80C benefits.</p></div>
-          </div>
+      <div class="faq-accordion" data-cms="faqs" data-cms-category="sip" data-faqs="list">
+        <!-- FAQs injected by page-sections.js -->
+        <div class="faq-item">
+          <div class="faq-q">Are SIP returns guaranteed?</div>
+          <div class="faq-a"><p>No. Mutual fund SIP returns are linked to the performance of the financial markets.</p></div>
         </div>
       </div>
     </article>
   </div>
 
-  <footer class="footer">
-    <div class="container" style="text-align: center;">&copy; 2025 Finzoop. All Rights Reserved.</div>
-  </footer>
 
   <script src="../main.js"></script>
   <script>if(window.lucide) { lucide.createIcons(); }</script>

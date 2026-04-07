@@ -35,63 +35,28 @@
     window.CONTENTFUL_ACCESS_TOKEN   = 'VCpSt0x-mm6pOncY1cYlkkuU5b9UsD_cs_mINwRgs6I';
     window.CONTENTFUL_PREVIEW_TOKEN  = 'Y3V82ept2t018xmuDJfyAf2Da86iZSsntizHFKwHmhk';
   </script>
-  <script src="/cms.js" defer></script>
-  <script src="/cms-preview.js" defer></script>
+  <script src="shared-components.js"></script>
+  <script src="page-sections.js"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
-<body data-cms-page="homepage" data-cms="global-settings">
+<body data-cms-page="homepage">
 
-  <!-- HEADER -->
-  <header class="header" data-cms="navigation">
-    <div class="container nav-container">
-      <a href="index.html" class="logo">Fin<span>zoop</span></a>
-      <button class="hamburger" aria-label="Toggle Navigation"><i data-lucide="menu" class="icon-sm"></i></button>
-      <nav class="nav-links">
-        <a href="index.html" class="nav-link active">Home</a>
-        <div class="dropdown">
-          <a href="#" class="nav-link">Products <i data-lucide="chevron-down" class="icon-sm"></i></a>
-          <div class="dropdown-menu">
-            <a href="loans.html" class="dropdown-item">Loans</a>
-            <a href="credit-cards.html" class="dropdown-item">Credit Cards</a>
-            <a href="insurance.html" class="dropdown-item">Insurance</a>
-            <a href="mutual-funds.html" class="dropdown-item">Mutual Funds</a>
-            <a href="nps.html" class="dropdown-item">NPS</a>
-            <a href="investments.html" class="dropdown-item">Investments</a>
-          </div>
-        </div>
-        <div class="dropdown">
-          <a href="calculators.html" class="nav-link">Calculators <i data-lucide="chevron-down" class="icon-sm"></i></a>
-          <div class="dropdown-menu">
-            <a href="calculators/sip.html" class="dropdown-item">SIP Calculator</a>
-            <a href="calculators/emi.html" class="dropdown-item">EMI Calculator</a>
-            <a href="calculators/income-tax.html" class="dropdown-item">Income Tax</a>
-            <a href="calculators/fd.html" class="dropdown-item">FD Calculator</a>
-            <a href="calculators.html" class="dropdown-item" style="color: var(--primary); font-weight: 600;">View All 14 Tools <i data-lucide="arrow-right" class="icon-sm"></i></a>
-          </div>
-        </div>
-        <a href="about.html" class="nav-link">About</a>
-        <a href="blog.html" class="nav-link">Blog</a>
-        <a href="contact.html" class="nav-link">Contact</a>
-        <a href="#" class="btn btn-primary" style="margin-left: 16px;">Check Eligibility</a>
-      </nav>
-    </div>
-  </header>
 
   <!-- HERO -->
   <section class="hero gradient-bg" data-cms="hero" data-cms-id="homepage-hero">
     <div class="container">
-      <h1>Smart Financial Decisions Start Here</h1>
-      <p>Compare loans, insurance, mutual funds and investments. Free tools. Unbiased advice. Zero hidden charges.</p>
+      <h1 data-hero="heading">Smart Financial Decisions Start Here</h1>
+      <p data-hero="subheading">Compare loans, insurance, mutual funds and investments. Free tools. Unbiased advice. Zero hidden charges.</p>
       <div class="hero-ctas">
-        <a href="#products" class="btn" style="background:#fff; color:var(--primary);">Explore Products</a>
-        <a href="calculators.html" class="btn btn-secondary">Try Calculators</a>
+        <a href="#products" class="btn" style="background:#fff; color:var(--primary);" data-hero="cta-primary">Explore Products</a>
+        <a href="calculators.html" class="btn btn-secondary" data-hero="cta-secondary">Try Calculators</a>
       </div>
       
-      <div class="trust-bar">
-        <div><strong>₹500Cr+</strong> Disbursed</div>
-        <div><strong>1L+</strong> Happy Users</div>
-        <div><strong>50+</strong> Partners</div>
-        <div><strong>AMFI</strong> Registered</div>
+      <div class="trust-bar" data-hero="trust-bar">
+        <div class="trust-item"><strong>₹500Cr+</strong> Disbursed</div>
+        <div class="trust-item"><strong>1L+</strong> Happy Users</div>
+        <div class="trust-item"><strong>50+</strong> Partners</div>
+        <div class="trust-item"><strong>AMFI</strong> Registered</div>
       </div>
     </div>
   </section>
@@ -127,6 +92,7 @@
       <p style="text-align: center; max-width: 600px; margin: 0 auto 40px;">Find exactly what you need to grow your wealth and protect your family.</p>
       
       <div class="grid-3">
+        <!-- Static products as fallback -->
         <a href="loans.html" class="card" style="display: block;">
           <div class="icon-box"><i data-lucide="banknote" class="icon-xl"></i></div>
           <h3>Loans</h3>
@@ -145,24 +111,26 @@
           <p>Comprehensive Life, Health, and Motor insurance plans to secure your future.</p>
           <span style="font-weight: 600; color: var(--primary);">Learn More <i data-lucide="arrow-right" class="icon-sm"></i></span>
         </a>
-        <a href="mutual-funds.html" class="card" style="display: block;">
-          <div class="icon-box"><i data-lucide="trending-up" class="icon-xl"></i></div>
-          <h3>Mutual Funds</h3>
-          <p>Invest in top-rated equity and debt funds. Start your SIP from just ₹500/month.</p>
-          <span style="font-weight: 600; color: var(--primary);">Learn More <i data-lucide="arrow-right" class="icon-sm"></i></span>
-        </a>
-        <a href="nps.html" class="card" style="display: block;">
-          <div class="icon-box"><i data-lucide="building-2" class="icon-xl"></i></div>
-          <h3>NPS</h3>
-          <p>Build your retirement corpus and save up to ₹50,000 extra in taxes u/s 80CCD(1B).</p>
-          <span style="font-weight: 600; color: var(--primary);">Learn More <i data-lucide="arrow-right" class="icon-sm"></i></span>
-        </a>
-        <a href="investments.html" class="card" style="display: block;">
-          <div class="icon-box"><i data-lucide="landmark" class="icon-xl"></i></div>
-          <h3>FDs & Bonds</h3>
-          <p>Safe, guaranteed returns with Fixed Deposits and top-rated Corporate Bonds.</p>
-          <span style="font-weight: 600; color: var(--primary);">Learn More <i data-lucide="arrow-right" class="icon-sm"></i></span>
-        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section" data-cms="testimonials">
+    <div class="container">
+      <h2 style="text-align: center; margin-bottom: 40px;">What Our Customers Say</h2>
+      <div class="grid-3" data-testimonials="grid">
+        <!-- Testimonials injected by page-sections.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNERS -->
+  <section class="section" style="background: var(--light-bg);" data-cms="partners">
+    <div class="container">
+      <h2 style="text-align: center; margin-bottom: 40px;">Our Banking Partners</h2>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; align-items: center;" data-partners="grid">
+        <!-- Partners injected by page-sections.js -->
       </div>
     </div>
   </section>
@@ -201,60 +169,6 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <div class="footer-logo">Fin<span style="color:var(--secondary)">zoop</span></div>
-          <p style="font-size: 14px; margin-bottom: 24px; max-width: 300px;">Your Financial Journey, Simplified. Compare and apply for loans, insurance, and investments seamlessly.</p>
-          <p class="disclaimer footer-disclaimer">Finzoop is a financial services distribution platform. Mutual fund investments are subject to market risks. Read all scheme-related documents carefully. Insurance is the subject matter of solicitation.</p>
-          <div class="social-links" style="display:flex; gap:12px; margin-top: 16px;">
-            <a href="#" aria-label="LinkedIn"><i data-lucide="linkedin" class="icon-md"></i></a>
-            <a href="#" aria-label="Twitter"><i data-lucide="twitter" class="icon-md"></i></a>
-            <a href="#" aria-label="Instagram"><i data-lucide="instagram" class="icon-md"></i></a>
-            <a href="#" aria-label="YouTube"><i data-lucide="youtube" class="icon-md"></i></a>
-          </div>
-        </div>
-        <div class="footer-col">
-          <h4>Quick Links</h4>
-          <ul class="footer-links">
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="loans.html">Loans</a></li>
-            <li><a href="mutual-funds.html">Mutual Funds</a></li>
-            <li><a href="insurance.html">Insurance</a></li>
-            <li><a href="blog.html">Blog & Resources</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Calculators</h4>
-          <div class="footer-calc-grid">
-            <ul class="footer-links">
-              <li><a href="calculators/sip.html">SIP Calculator</a></li>
-              <li><a href="calculators/emi.html">EMI Calculator</a></li>
-              <li><a href="calculators/fd.html">FD Calculator</a></li>
-              <li><a href="calculators/ppf.html">PPF Calculator</a></li>
-            </ul>
-            <ul class="footer-links">
-              <li><a href="calculators/income-tax.html">Income Tax</a></li>
-              <li><a href="calculators/elss.html">ELSS Calculator</a></li>
-              <li><a href="calculators/lumpsum.html">Lumpsum</a></li>
-              <li><a href="calculators.html">View All <i data-lucide="arrow-right" class="icon-sm"></i></a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <div>&copy; 2025 Finzoop. All Rights Reserved.</div>
-        <div style="display: flex; gap: 16px;">
-          <a href="privacy-policy.html" style="color: #94A3B8;">Privacy Policy</a>
-          <a href="terms.html" style="color: #94A3B8;">Terms & Conditions</a>
-        </div>
-        <div>AMFI Registered | IRDAI Corporate Agent</div>
-      </div>
-    </div>
-  </footer>
 
   <script src="main.js"></script>
   <script>if(window.lucide) lucide.createIcons();</script>

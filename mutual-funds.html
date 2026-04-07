@@ -7,31 +7,13 @@
   <meta name="description" content="Compare and invest in top-performing mutual funds in India. Start a SIP with as low as ₹500. Zero commission direct plans.">
   <link rel="canonical" href="https://finzoop.com/mutual-funds.html">
   <link rel="stylesheet" href="style.css">
+  <script src="shared-components.js"></script>
+  <script src="products.js"></script>
+  <script src="page-sections.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
-<body data-cms-page="mutual-funds">
+<body data-cms-page="mutual-funds" data-product-page="mutual-funds">
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container nav-container">
-      <a href="index.html" class="logo">Fin<span>zoop</span></a>
-      <button class="hamburger" aria-label="Toggle Navigation"><i data-lucide="menu" class="icon-sm"></i></button>
-      <nav class="nav-links">
-        <a href="index.html" class="nav-link">Home</a>
-        <div class="dropdown">
-          <a href="#" class="nav-link active">Products ▾</a>
-          <div class="dropdown-menu">
-            <a href="loans.html" class="dropdown-item">Loans</a>
-            <a href="credit-cards.html" class="dropdown-item">Credit Cards</a>
-            <a href="insurance.html" class="dropdown-item">Insurance</a>
-            <a href="mutual-funds.html" class="dropdown-item" style="color: var(--primary); font-weight: 600;">Mutual Funds</a>
-            <a href="nps.html" class="dropdown-item">NPS</a>
-            <a href="investments.html" class="dropdown-item">Investments</a>
-          </div>
-        </div>
-        <a href="calculators.html" class="nav-link">Calculators</a>
-      </nav>
-    </div>
-  </header>
 
   <div class="container" style="padding-top: 120px;">
     <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -39,69 +21,20 @@
     </nav>
   </div>
 
+  <section class="section" data-cms="hero" data-cms-id="mutual-funds-hero">
+    <div class="container">
+      <h1 style="text-align: center; margin-bottom: 20px;" data-hero="heading">Grow Your Wealth Systematically</h1>
+      <p style="text-align: center; margin-bottom: 40px;" data-hero="subheading">Select from over 2,000+ direct mutual funds. Zero commissions, unbiased recommendations.</p>
+    </div>
+  </section>
+
   <section class="section">
     <div class="container">
-      <h1 style="text-align: center; margin-bottom: 20px;">Grow Your Wealth Systematically</h1>
-      <p style="text-align: center; margin-bottom: 40px;">Select from over 2,000+ direct mutual funds. Zero commissions, unbiased recommendations.</p>
-
-      <!-- Filter Bar -->
-      <div class="toggle-group" style="max-width: 800px; margin: 0 auto 40px; display: flex; flex-wrap: wrap;">
-        <button class="active">Equity</button>
-        <button>Debt</button>
-        <button>Hybrid</button>
-        <button>ELSS (Tax Saving)</button>
-        <button>Index Funds</button>
+      <div class="product-tabs" data-cms="product-categories">
+        <!-- Categories injected by products.js -->
       </div>
-
-      <!-- Fund Grid -->
-      <div class="grid-3">
-        <div class="card">
-          <div style="font-size: 12px; color: var(--text-secondary); text-transform: uppercase; font-weight: 700; margin-bottom: 8px;">Large Cap • Equity</div>
-          <h3 style="font-size: 18px; margin-bottom: 16px;">Finzoop Bluechip Equity Fund</h3>
-          <div style="display: flex; justify-content: space-between; margin-bottom: 16px; align-items: center;">
-            <div>
-              <div style="font-size: 24px; font-weight: 700; color: var(--secondary);">18.5%</div>
-              <div style="font-size: 12px; color: var(--text-secondary);">3Y Annualised</div>
-            </div>
-            <div style="text-align: right;">
-              <div style="font-size: 14px; font-weight: 600;">Very High Risk</div>
-              <div style="font-size: 12px; color: var(--text-secondary);">Min SIP: ₹500</div>
-            </div>
-          </div>
-          <a href="#" class="btn btn-primary" style="width: 100%;">Invest Now</a>
-        </div>
-        
-        <div class="card">
-          <div style="font-size: 12px; color: var(--text-secondary); text-transform: uppercase; font-weight: 700; margin-bottom: 8px;">ELSS • Tax Saving</div>
-          <h3 style="font-size: 18px; margin-bottom: 16px;">Finzoop Tax Saver Fund</h3>
-          <div style="display: flex; justify-content: space-between; margin-bottom: 16px; align-items: center;">
-            <div>
-              <div style="font-size: 24px; font-weight: 700; color: var(--secondary);">22.1%</div>
-              <div style="font-size: 12px; color: var(--text-secondary);">3Y Annualised</div>
-            </div>
-            <div style="text-align: right;">
-              <div style="font-size: 14px; font-weight: 600;">Very High Risk</div>
-              <div style="font-size: 12px; color: var(--text-secondary);">Min SIP: ₹500</div>
-            </div>
-          </div>
-          <a href="#" class="btn btn-primary" style="width: 100%;">Invest Now</a>
-        </div>
-
-        <div class="card">
-          <div style="font-size: 12px; color: var(--text-secondary); text-transform: uppercase; font-weight: 700; margin-bottom: 8px;">Index • Passive</div>
-          <h3 style="font-size: 18px; margin-bottom: 16px;">Finzoop Nifty 50 Index Fund</h3>
-          <div style="display: flex; justify-content: space-between; margin-bottom: 16px; align-items: center;">
-            <div>
-              <div style="font-size: 24px; font-weight: 700; color: var(--secondary);">16.8%</div>
-              <div style="font-size: 12px; color: var(--text-secondary);">3Y Annualised</div>
-            </div>
-            <div style="text-align: right;">
-              <div style="font-size: 14px; font-weight: 600;">High Risk</div>
-              <div style="font-size: 12px; color: var(--text-secondary);">Min SIP: ₹100</div>
-            </div>
-          </div>
-          <a href="#" class="btn btn-primary" style="width: 100%;">Invest Now</a>
-        </div>
+      <div id="product-grid-container" data-cms="product-grid">
+        <!-- Products injected by products.js -->
       </div>
     </div>
   </section>
@@ -167,17 +100,6 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <div class="footer-logo">Fin<span style="color:var(--secondary)">zoop</span></div>
-          <p class="disclaimer">Finzoop is an AMFI registered mutual fund distributor. Mutual fund investments are subject to market risks, read all scheme related documents carefully. Past performance is not an indicator of future returns.</p>
-        </div>
-      </div>
-    </div>
-  </footer>
 
   <script src="main.js"></script>
 </body>
