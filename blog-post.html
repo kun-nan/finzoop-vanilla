@@ -3,28 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog & Financial Resources | Finzoop</title>
+  <title>Loading Post... | Finzoop</title>
+  <meta name="description" content="Read our latest financial insights and guides on the Finzoop blog.">
   <link rel="stylesheet" href="style.css">
   <script>
     window.CONTENTFUL_SPACE_ID       = 'tabc1qgaltm6';
     window.CONTENTFUL_ACCESS_TOKEN   = 'VCpSt0x-mm6pOncY1cYlkkuU5b9UsD_cs_mINwRgs6I';
     window.CONTENTFUL_PREVIEW_TOKEN  = 'Y3V82ept2t018xmuDJfyAf2Da86iZSsntizHFKwHmhk';
   </script>
+  <!-- Contentful Rich Text Renderer -->
+  <script src="https://unpkg.com/@contentful/rich-text-html-renderer@16.0.0/dist/rich-text-html-renderer.es5.min.js"></script>
   <script src="/cms.js" defer></script>
   <script src="/blog.js" defer></script>
   <script src="/cms-preview.js" defer></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-
 </head>
-<body data-cms-page="blog">
+<body data-cms-page="blog-post">
   <header class="header">
     <div class="container nav-container">
       <a href="index.html" class="logo">Fin<span>zoop</span></a>
-      <button class="hamburger"><i data-lucide="menu" class="icon-sm"></i></button>
+      <button class="hamburger" aria-label="Toggle Navigation"><i data-lucide="menu" class="icon-sm"></i></button>
       <nav class="nav-links">
         <a href="index.html" class="nav-link">Home</a>
         <div class="dropdown">
-          <a href="#" class="nav-link">Products ▾</a>
+          <a href="#" class="nav-link">Products <i data-lucide="chevron-down" class="icon-sm"></i></a>
           <div class="dropdown-menu">
             <a href="loans.html" class="dropdown-item">Loans</a>
             <a href="mutual-funds.html" class="dropdown-item">Mutual Funds</a>
@@ -35,17 +37,24 @@
       </nav>
     </div>
   </header>
-  <div class="container" style="padding-top: 120px;" data-cms="page-seo" data-cms-slug="blog-page">
-    <h1 style="text-align:center; margin-bottom: 40px;">Finzoop Insights</h1>
-    
+
+  <main class="container" style="padding-top: 120px; padding-bottom: 80px;">
     <!-- Dynamic Content Loading Area -->
-    <div data-cms="blog-list">
-      <!-- Content will be injected here by blog.js/wordpress-blog.js -->
-      <div class="skeleton-card"></div>
-      <div class="skeleton-card"></div>
-      <div class="skeleton-card"></div>
+    <div data-cms="blog-post">
+      <div style="max-width:780px;margin:0 auto;">
+        <div class="skeleton-heading" style="height:48px;margin-bottom:24px;"></div>
+        <div class="skeleton-text" style="height:20px;margin-bottom:12px;"></div>
+        <div class="skeleton-text" style="height:20px;margin-bottom:12px;"></div>
+        <div class="skeleton-image" style="height:400px;margin-bottom:32px;"></div>
+        <div class="skeleton-text"></div>
+      </div>
     </div>
-  </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container" style="text-align: center;">&copy; 2025 Finzoop. All Rights Reserved.</div>
+  </footer>
+
   <script src="main.js"></script>
   <script>if(window.lucide){lucide.createIcons();}</script>
 </body>
