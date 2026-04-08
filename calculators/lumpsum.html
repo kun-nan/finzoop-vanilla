@@ -13,9 +13,9 @@
     window.CONTENTFUL_ACCESS_TOKEN   = 'VCpSt0x-mm6pOncY1cYlkkuU5b9UsD_cs_mINwRgs6I';
     window.CONTENTFUL_PREVIEW_TOKEN  = 'Y3V82ept2t018xmuDJfyAf2Da86iZSsntizHFKwHmhk';
   </script>
-  <script src="../shared-components.js"></script>
-  <script src="../page-sections.js"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="../shared-nav.js"></script>
+  <script src="../page-sections.js"></script>
 </head>
 <body data-cms-page="lumpsum">
 
@@ -49,12 +49,12 @@
           <div class="input-header">
             <label class="input-label">Expected Return (%)</label>
             <div class="number-input-wrap">
-              <input type="text" class="sync-input" data-sync="lum-rate" value="12" style="padding-left:12px; padding-right:28px;">
+              <input type="text" class="sync-input" data-sync="lum-rate" value="12.0" style="padding-left:12px; padding-right:28px;">
               <span style="left:auto; right:12px;">%</span>
             </div>
           </div>
           <div class="range-slider">
-            <input type="range" class="sync-range" data-sync="lum-rate" min="1" max="30" step="0.01" value="12">
+            <input type="range" class="sync-range" data-sync="lum-rate" min="1" max="30" step="0.1" value="12.0">
           </div>
         </div>
 

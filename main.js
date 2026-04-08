@@ -69,35 +69,44 @@ document.addEventListener('DOMContentLoaded', () => {
     updateRangeBg(range);
     
     range.addEventListener('input', (e) => {
-      const val = parseInt(e.target.value);
+      const val = parseFloat(e.target.value);
       if (syncGroups[id].input) {
-        syncGroups[id].input.value = window.formatINR(val).replace('₹', '');
+        const isRate = id.includes('rate') || id.includes('return') || id.includes('interest');
+        syncGroups[id].input.value = isRate ? val.toFixed(1) : window.formatINR(val).replace('₹', '');
       }
       updateRangeBg(e.target);
       triggerCalcUpdate();
     });
   });
 
-  document.querySelectorAll('input[type="text"].sync-input').forEach(input => {
+  document.querySelectorAll('input[type="text"].sync-input, input[type="number"].sync-input').forEach(input => {
     const id = input.getAttribute('data-sync');
     if (!syncGroups[id]) syncGroups[id] = {};
     syncGroups[id].input = input;
 
     // Format Initial value
     if(input.value) {
-      input.value = window.formatINR(parseINR(input.value)).replace('₹', '');
+      const isRate = id.includes('rate') || id.includes('return') || id.includes('interest');
+      if (isRate) {
+        input.value = parseFloat(input.value).toFixed(1);
+      } else {
+        input.value = window.formatINR(parseINR(input.value)).replace('₹', '');
+      }
     }
 
     input.addEventListener('blur', (e) => {
-      let val = parseINR(e.target.value);
+      let val = parseFloat(e.target.value.replace(/[^0-9.-]+/g, "")) || 0;
       const range = syncGroups[id].range;
       if (range) {
-        const min = parseInt(range.min);
-        const max = parseInt(range.max);
+        const min = parseFloat(range.min);
+        const max = parseFloat(range.max);
         if (val < min) val = min;
         if (val > max) val = max;
         range.value = val;
-        e.target.value = window.formatINR(val).replace('₹', '');
+        
+        const isRate = id.includes('rate') || id.includes('return') || id.includes('interest');
+        e.target.value = isRate ? val.toFixed(1) : window.formatINR(val).replace('₹', '');
+        
         updateRangeBg(range);
         triggerCalcUpdate();
       }
